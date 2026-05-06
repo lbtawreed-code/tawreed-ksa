@@ -29,21 +29,19 @@ export function WelcomeScreen({
       <div className="relative z-10 max-w-5xl mx-auto px-5 md:px-8 pt-12 md:pt-16 pb-8">
         <div className="mb-6 md:mb-8 grid md:grid-cols-2 gap-6 md:gap-8 items-center">
           <div className="flex justify-center">
-            <div
-              className="rounded-2xl p-3 md:p-4 shadow-elegant w-full max-w-[320px] flex items-center justify-center border-s-4 aspect-[16/9]"
-              style={{ background: "hsl(var(--ppa-navy-deep))", borderInlineStartColor: "hsl(var(--ppa-blue))" }}
-            >
-              <img src={logo} alt="PPA" className="w-full h-full object-contain" />
-            </div>
+            <img
+              src={logo}
+              alt="PPA"
+              className="w-full max-w-[320px] aspect-[16/9] object-contain logo-3d"
+            />
           </div>
 
           <div className="flex justify-center">
-            <div
-              className="rounded-2xl p-3 md:p-4 shadow-elegant w-full max-w-[320px] flex items-center justify-center border-s-4 aspect-[16/9] bg-white"
-              style={{ borderInlineStartColor: "hsl(var(--ppa-red))" }}
-            >
-              <img src={tawreedLogo} alt="TAWREED" className="w-full h-full object-contain" />
-            </div>
+            <img
+              src={tawreedLogo}
+              alt="TAWREED"
+              className="w-full max-w-[320px] aspect-[16/9] object-contain logo-3d"
+            />
           </div>
 
         </div>

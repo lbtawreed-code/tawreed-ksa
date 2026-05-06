@@ -182,7 +182,7 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
       <div className="relative z-10 flex-1 overflow-y-auto" style={{ paddingTop: 16, paddingBottom: 32 }}>
         <div className="max-w-4xl mx-auto px-4 md:px-6 flex flex-col space-y-8">
           {messages.map((m) => (
-            <MessageBubble key={m.id} msg={m} lang={lang} />
+            <MessageBubble key={m.id} msg={m} lang={lang} onSuggest={send} />
           ))}
           {sending && (
             <div className={`flex ${lang === "ar" ? "justify-end" : "justify-start"} fade-in`}>

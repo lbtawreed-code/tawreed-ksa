@@ -1,11 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { Send, Home, Sparkles, Mic, Square, FileText } from "lucide-react";
+import { Send, Home, Sparkles, Mic, Square, FileText, ArrowRight, RefreshCw } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import mascotFace from "@/assets/tawreed-mascot-face.png";
 import logoAr from "@/assets/ppa-logo-ar.png";
 import logoEn from "@/assets/ppa-logo-en.png";
 import { dict, type Lang } from "@/lib/i18n";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 const WEBHOOK_URL = "https://n8n.multydo.com/webhook/tawreed-chat";
 
@@ -179,7 +182,7 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
       <div className="relative z-10 flex-1 overflow-y-auto" style={{ paddingTop: 16, paddingBottom: 32 }}>
         <div className="max-w-4xl mx-auto px-4 md:px-6 flex flex-col space-y-8">
           {messages.map((m) => (
-            <MessageBubble key={m.id} msg={m} lang={lang} />
+            <MessageBubble key={m.id} msg={m} lang={lang} onSuggest={send} />
           ))}
           {sending && (
             <div className={`flex ${lang === "ar" ? "justify-end" : "justify-start"} fade-in`}>
@@ -271,7 +274,7 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
   );
 }
 
-function MessageBubble({ msg, lang }: { msg: Msg; lang: Lang }) {
+function MessageBubble({ msg, lang, onSuggest }: { msg: Msg; lang: Lang; onSuggest: (text: string) => void }) {
   const isUser = msg.sender === "user";
   const align = isUser
     ? lang === "ar" ? "justify-start" : "justify-end"
@@ -289,16 +292,47 @@ function MessageBubble({ msg, lang }: { msg: Msg; lang: Lang }) {
 
   const docs = (msg.docs || []).filter((d) => d.name && d.url && d.url !== "undefined");
 
+  // Parse the text to extract title, callout, steps
+  const { title, body, callout, steps } = parseBotMessage(msg.text);
+
+  const nextActions = getNextActions(lang);
+
   return (
     <div className={`flex ${align} fade-in`}>
-      <div className="flex items-end gap-3 max-w-[90%]">
+      <div className="flex items-end gap-3 max-w-[90%] w-full">
         <img src={mascotFace} alt="" className="h-9 w-9 rounded-full ring-2 ring-white object-cover shadow-md flex-shrink-0" />
-        <div className="glass-panel border border-gray-200 rounded-lg rounded-bl-sm px-5 py-4 shadow-soft">
+        <Card className="flex-1 glass-panel border border-gray-200 rounded-lg rounded-bl-sm px-5 py-4 shadow-soft">
           <div
             dir={lang === "ar" ? "rtl" : "ltr"}
             className="chat-prose prose prose-sm max-w-none text-foreground/90 leading-relaxed"
           >
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.text}</ReactMarkdown>
+            {title && (
+              <h2 className="font-bold mb-2" style={{ color: "hsl(var(--primary))" }}>
+                {title}
+              </h2>
+            )}
+            {body && (
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{body}</ReactMarkdown>
+            )}
+            {steps.length > 0 && (
+              <ol className="list-none pl-0 space-y-2 my-3">
+                {steps.map((s, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <Badge className="shrink-0 mt-0.5 rounded-full h-6 w-6 flex items-center justify-center p-0">
+                      {i + 1}
+                    </Badge>
+                    <div className="flex-1">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>{s}</ReactMarkdown>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            )}
+            {callout && (
+              <div className="bg-slate-100 border-s-4 border-primary rounded-md px-4 py-3 my-3 not-prose">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{callout}</ReactMarkdown>
+              </div>
+            )}
           </div>
           {docs.length > 0 && (
             <div className="mt-3 flex flex-wrap gap-2">
@@ -317,13 +351,66 @@ function MessageBubble({ msg, lang }: { msg: Msg; lang: Lang }) {
               ))}
             </div>
           )}
+          {msg.id !== "init" && (
+            <div className="mt-4 pt-3 border-t border-border/60 flex flex-wrap gap-2">
+              <Button size="sm" variant="default" onClick={() => onSuggest(nextActions[0])} className="gap-1.5">
+                <ArrowRight size={14} /> {nextActions[0]}
+              </Button>
+              <Button size="sm" variant="outline" onClick={() => onSuggest(nextActions[1])} className="gap-1.5">
+                <Sparkles size={14} /> {nextActions[1]}
+              </Button>
+            </div>
+          )}
           {msg.retry && (
-            <button onClick={msg.retry} className="mt-3 text-xs font-semibold underline" style={{ color: "hsl(var(--ppa-blue))" }}>
-              {lang === "ar" ? "إعادة المحاولة" : lang === "fr" ? "Réessayer" : "Retry"}
+            <button onClick={msg.retry} className="mt-3 text-xs font-semibold underline flex items-center gap-1" style={{ color: "hsl(var(--ppa-blue))" }}>
+              <RefreshCw size={12} /> {lang === "ar" ? "إعادة المحاولة" : lang === "fr" ? "Réessayer" : "Retry"}
             </button>
           )}
-        </div>
+        </Card>
       </div>
     </div>
   );
 }
+
+function parseBotMessage(text: string): { title: string; body: string; callout: string; steps: string[] } {
+  const lines = text.split("\n");
+  let title = "";
+  let rest = text;
+
+  // Title = first markdown heading or first non-empty line if short
+  const headingMatch = text.match(/^#{1,6}\s+(.+)$/m);
+  if (headingMatch) {
+    title = headingMatch[1].trim();
+    rest = text.replace(headingMatch[0], "").trim();
+  } else {
+    const first = lines.find((l) => l.trim());
+    if (first && first.length < 90 && lines.length > 1) {
+      title = first.replace(/^\*+|\*+$/g, "").trim();
+      rest = lines.slice(lines.indexOf(first) + 1).join("\n").trim();
+    }
+  }
+
+  // Extract numbered steps (lines starting with "1.", "2.", etc.)
+  const steps: string[] = [];
+  const stepRegex = /^\s*\d+[.)]\s+(.+)$/gm;
+  let m;
+  while ((m = stepRegex.exec(rest)) !== null) steps.push(m[1].trim());
+  if (steps.length > 0) rest = rest.replace(stepRegex, "").trim();
+
+  // Callout: blockquote (lines starting with >) OR last paragraph if it begins with key markers
+  let callout = "";
+  const blockquoteMatch = rest.match(/(^|\n)((?:>\s?.*(?:\n|$))+)/);
+  if (blockquoteMatch) {
+    callout = blockquoteMatch[2].replace(/^>\s?/gm, "").trim();
+    rest = rest.replace(blockquoteMatch[0], "").trim();
+  }
+
+  return { title, body: rest, callout, steps };
+}
+
+function getNextActions(lang: Lang): [string, string] {
+  if (lang === "ar") return ["أخبرني المزيد", "أعطني مثالاً"];
+  if (lang === "fr") return ["En savoir plus", "Donnez-moi un exemple"];
+  return ["Tell me more", "Give me an example"];
+}
+

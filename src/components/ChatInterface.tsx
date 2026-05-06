@@ -151,6 +151,11 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
       <div className="orb" style={{ width: 320, height: 320, background: "hsl(var(--ppa-blue))", top: -80, right: -80, opacity: 0.15 }} />
       <div className="orb" style={{ width: 260, height: 260, background: "hsl(var(--ppa-green))", bottom: -60, left: -60, opacity: 0.15, animationDelay: "3s" }} />
 
+      {/* PPA watermark */}
+      <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center opacity-[0.06]">
+        <img src={logo} alt="" className="w-[80%] h-[80%] object-contain" />
+      </div>
+
       {/* Header */}
       <div className="relative z-20 shrink-0 border-b border-white/40 bg-white/60 backdrop-blur-xl">
         <div className="max-w-4xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between gap-3">

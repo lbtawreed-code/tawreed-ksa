@@ -37,16 +37,15 @@ export function WelcomeScreen({
             </div>
           </div>
 
-          <div className="flex flex-col items-center text-center">
-            <h1 className="font-display font-bold leading-none text-[clamp(2.75rem,10vw,6rem)] md:text-[clamp(4rem,8vw,7rem)]" style={{ color: "hsl(var(--ppa-navy))" }}>
-              {t.title}
-            </h1>
-            <p className="mt-3 text-sm md:text-lg text-foreground/60 tracking-[0.3em] uppercase font-semibold">
-              {t.tagline}
-            </p>
-            <p className="mt-2 text-base md:text-xl text-foreground/70">{t.subtitle}</p>
-            <div className="cedar-bar w-24 md:w-32 rounded-full mt-4" />
+          <div className="flex justify-center">
+            <div
+              className="rounded-2xl p-3 md:p-4 shadow-elegant w-full max-w-[320px] flex items-center justify-center border-s-4 aspect-[16/9] bg-white"
+              style={{ borderInlineStartColor: "hsl(var(--ppa-red))" }}
+            >
+              <img src={tawreedLogo} alt="TAWREED" className="w-full h-full object-contain" />
+            </div>
           </div>
+
         </div>
 
         <div className="glass-panel rounded-3xl shadow-elegant overflow-hidden grid md:grid-cols-2 max-w-5xl mx-auto">

@@ -1,16 +1,36 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useEffect, useState } from "react";
+import { WelcomeScreen } from "@/components/WelcomeScreen";
+import { ChatInterface } from "@/components/ChatInterface";
+import { LangSwitcher } from "@/components/LangSwitcher";
+import type { Lang } from "@/lib/i18n";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
+  const [lang, setLang] = useState<Lang>("en");
+  const [view, setView] = useState<"welcome" | "chat">("welcome");
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+    document.title =
+      lang === "ar"
+        ? "توريد — مساعد الشراء العام"
+        : lang === "fr"
+        ? "TAWREED — Assistant des marchés publics"
+        : "TAWREED — Public Procurement AI";
+  }, [lang]);
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
-    </div>
+    <main className="relative">
+      <div className="fixed top-4 end-4 z-50">
+        <LangSwitcher current={lang} onChange={setLang} />
+      </div>
+      {view === "welcome" ? (
+        <WelcomeScreen lang={lang} onStart={() => setView("chat")} />
+      ) : (
+        <ChatInterface lang={lang} onHome={() => setView("welcome")} />
+      )}
+    </main>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;

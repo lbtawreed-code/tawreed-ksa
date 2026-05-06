@@ -1,11 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { Send, Home, Sparkles, Mic, Square, FileText } from "lucide-react";
+import { Send, Home, Sparkles, Mic, Square, FileText, ArrowRight, RefreshCw } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import mascotFace from "@/assets/tawreed-mascot-face.png";
 import logoAr from "@/assets/ppa-logo-ar.png";
 import logoEn from "@/assets/ppa-logo-en.png";
 import { dict, type Lang } from "@/lib/i18n";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 const WEBHOOK_URL = "https://n8n.multydo.com/webhook/tawreed-chat";
 

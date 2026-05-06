@@ -280,6 +280,22 @@ function MessageBubble({ msg, lang, onSuggest }: { msg: Msg; lang: Lang; onSugge
     ? lang === "ar" ? "justify-start" : "justify-end"
     : lang === "ar" ? "justify-end" : "justify-start";
 
+  const navy = "hsl(var(--ppa-navy-deep))";
+  const mdComponents = {
+    a: ({ node, ...props }: any) => (
+      <a {...props} target="_blank" rel="noreferrer" className="font-bold underline" style={{ color: navy }} />
+    ),
+    h1: ({ node, ...props }: any) => <h1 {...props} className="font-bold mt-3 mb-2" style={{ color: navy }} />,
+    h2: ({ node, ...props }: any) => <h2 {...props} className="font-bold mt-3 mb-2" style={{ color: navy }} />,
+    h3: ({ node, ...props }: any) => <h3 {...props} className="font-bold mt-2 mb-1.5" style={{ color: navy }} />,
+    h4: ({ node, ...props }: any) => <h4 {...props} className="font-bold mt-2 mb-1.5" style={{ color: navy }} />,
+    strong: ({ node, ...props }: any) => <strong {...props} className="font-bold" style={{ color: navy }} />,
+    ul: ({ node, ...props }: any) => <ul {...props} className="list-disc ps-6 my-2 space-y-1.5" />,
+    ol: ({ node, ...props }: any) => <ol {...props} className="list-decimal ps-6 my-2 space-y-1.5" />,
+    li: ({ node, ...props }: any) => <li {...props} className="leading-relaxed" />,
+    p: ({ node, ...props }: any) => <p {...props} className="my-2 leading-relaxed" />,
+  };
+
   if (isUser) {
     return (
       <div className={`flex ${align} fade-in`}>
@@ -307,22 +323,25 @@ function MessageBubble({ msg, lang, onSuggest }: { msg: Msg; lang: Lang; onSugge
             className="chat-prose prose prose-sm max-w-none text-foreground/90 leading-relaxed"
           >
             {title && (
-              <h2 className="font-bold mb-2" style={{ color: "hsl(var(--primary))" }}>
+              <h2 className="font-bold mb-2" style={{ color: navy }}>
                 {title}
               </h2>
             )}
             {body && (
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{body}</ReactMarkdown>
+              <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>{body}</ReactMarkdown>
             )}
             {steps.length > 0 && (
               <ol className="list-none pl-0 space-y-2 my-3">
                 {steps.map((s, i) => (
                   <li key={i} className="flex items-start gap-3">
-                    <Badge className="shrink-0 mt-0.5 rounded-full h-6 w-6 flex items-center justify-center p-0">
+                    <Badge
+                      className="shrink-0 mt-0.5 rounded-full h-6 w-6 flex items-center justify-center p-0 border-transparent"
+                      style={{ backgroundColor: navy, color: "white" }}
+                    >
                       {i + 1}
                     </Badge>
                     <div className="flex-1">
-                      <ReactMarkdown remarkPlugins={[remarkGfm]}>{s}</ReactMarkdown>
+                      <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>{s}</ReactMarkdown>
                     </div>
                   </li>
                 ))}
@@ -330,7 +349,7 @@ function MessageBubble({ msg, lang, onSuggest }: { msg: Msg; lang: Lang; onSugge
             )}
             {callout && (
               <div className="bg-slate-100 border-s-4 border-primary rounded-md px-4 py-3 my-3 not-prose">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>{callout}</ReactMarkdown>
+                <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>{callout}</ReactMarkdown>
               </div>
             )}
           </div>

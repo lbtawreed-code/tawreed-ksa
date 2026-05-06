@@ -21,9 +21,11 @@ const Index = () => {
 
   return (
     <main className="relative">
-      <div className="fixed top-4 end-4 z-50">
-        <LangSwitcher current={lang} onChange={setLang} />
-      </div>
+      {view === "welcome" && (
+        <div className="fixed top-4 end-4 z-50">
+          <LangSwitcher current={lang} onChange={setLang} />
+        </div>
+      )}
       {view === "welcome" ? (
         <WelcomeScreen lang={lang} onStart={() => setView("chat")} />
       ) : (

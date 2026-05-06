@@ -3,6 +3,7 @@ import { Play, ArrowRight, Shield, Languages, BookOpen } from "lucide-react";
 import mascotFace from "@/assets/tawreed-mascot-face.png";
 import logoAr from "@/assets/ppa-logo-ar.png";
 import logoEn from "@/assets/ppa-logo-en.png";
+import tawreedLogo from "@/assets/tawreed-logo.png";
 import { dict, type Lang } from "@/lib/i18n";
 
 const FEATURE_ICONS = [Shield, Languages, BookOpen];

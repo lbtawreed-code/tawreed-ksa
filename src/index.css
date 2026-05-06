@@ -166,16 +166,23 @@
   .chat-prose thead th {
     color: #fff;
     font-weight: 700;
-    text-align: center;
+    text-align: center !important;
+    vertical-align: middle;
     padding: 0.6rem 0.75rem;
     border-inline-end: 1px solid hsl(var(--ppa-navy-deep));
   }
   .chat-prose thead th:last-child { border-inline-end: 0; }
-  .chat-prose tbody td {
-    text-align: center;
+  .chat-prose tbody td,
+  .chat-prose tbody th {
+    text-align: center !important;
+    vertical-align: middle;
     padding: 0.55rem 0.75rem;
     border-top: 1px solid hsl(var(--border));
     border-inline-end: 1px solid hsl(var(--border));
+  }
+  .chat-prose tbody td *,
+  .chat-prose tbody th * {
+    text-align: center !important;
   }
   .chat-prose tbody td:last-child { border-inline-end: 0; }
   .chat-prose tbody tr:nth-child(even) { background: hsl(var(--secondary) / 0.5); }

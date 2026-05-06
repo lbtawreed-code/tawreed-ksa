@@ -176,8 +176,8 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
       </div>
 
       {/* Messages */}
-      <div className="relative z-10 flex-1 overflow-y-auto" style={{ paddingTop: 16, paddingBottom: 20 }}>
-        <div className="max-w-4xl mx-auto px-4 md:px-6 flex flex-col gap-6">
+      <div className="relative z-10 flex-1 overflow-y-auto" style={{ paddingTop: 16, paddingBottom: 32 }}>
+        <div className="max-w-4xl mx-auto px-4 md:px-6 flex flex-col space-y-8">
           {messages.map((m) => (
             <MessageBubble key={m.id} msg={m} lang={lang} />
           ))}
@@ -185,7 +185,7 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
             <div className={`flex ${lang === "ar" ? "justify-end" : "justify-start"} fade-in`}>
               <div className="flex items-end gap-3 max-w-[85%]">
                 <img src={mascotFace} alt="" className="h-9 w-9 rounded-full ring-2 ring-white object-cover shadow-md flex-shrink-0" />
-                <div className="glass-panel rounded-2xl rounded-bl-sm px-5 py-4 shadow-soft">
+                <div className="glass-panel border border-gray-200 rounded-lg rounded-bl-sm px-5 py-4 shadow-soft">
                   <span className="typing-dot" />
                   <span className="typing-dot mx-1" />
                   <span className="typing-dot" />
@@ -293,8 +293,8 @@ function MessageBubble({ msg, lang }: { msg: Msg; lang: Lang }) {
     <div className={`flex ${align} fade-in`}>
       <div className="flex items-end gap-3 max-w-[90%]">
         <img src={mascotFace} alt="" className="h-9 w-9 rounded-full ring-2 ring-white object-cover shadow-md flex-shrink-0" />
-        <div className="glass-panel rounded-2xl rounded-bl-sm px-5 py-4 shadow-soft">
-          <div className="prose prose-sm max-w-none text-foreground/90 leading-relaxed">
+        <div className="glass-panel border border-gray-200 rounded-lg rounded-bl-sm px-5 py-4 shadow-soft">
+          <div className="chat-prose prose prose-sm max-w-none text-foreground/90 leading-relaxed">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.text}</ReactMarkdown>
           </div>
           {docs.length > 0 && (

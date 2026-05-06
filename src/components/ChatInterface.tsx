@@ -294,7 +294,10 @@ function MessageBubble({ msg, lang }: { msg: Msg; lang: Lang }) {
       <div className="flex items-end gap-3 max-w-[90%]">
         <img src={mascotFace} alt="" className="h-9 w-9 rounded-full ring-2 ring-white object-cover shadow-md flex-shrink-0" />
         <div className="glass-panel border border-gray-200 rounded-lg rounded-bl-sm px-5 py-4 shadow-soft">
-          <div className="chat-prose prose prose-sm max-w-none text-foreground/90 leading-relaxed">
+          <div
+            dir={lang === "ar" ? "rtl" : "ltr"}
+            className="chat-prose prose prose-sm max-w-none text-foreground/90 leading-relaxed"
+          >
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.text}</ReactMarkdown>
           </div>
           {docs.length > 0 && (

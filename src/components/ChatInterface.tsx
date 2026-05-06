@@ -342,8 +342,8 @@ function MessageBubble({ msg, lang, onSuggest }: { msg: Msg; lang: Lang; onSugge
                   href={d.url}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-white border border-border hover:border-primary hover:shadow-soft transition"
-                  style={{ color: "hsl(var(--ppa-blue))" }}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-lg bg-white border border-border hover:shadow-soft transition underline"
+                  style={{ color: "hsl(var(--ppa-navy-deep))", borderColor: "hsl(var(--ppa-navy-deep) / 0.3)" }}
                 >
                   <FileText size={13} />
                   {d.name}

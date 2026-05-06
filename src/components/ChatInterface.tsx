@@ -244,7 +244,8 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
               onClick={() => send(input)}
               disabled={sending || !input.trim() || recording}
               aria-label={t.send}
-              className="h-12 w-12 shrink-0 rounded-2xl gradient-primary text-primary-foreground shadow-soft hover:shadow-glow active:scale-95 flex items-center justify-center transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+              className="h-12 w-12 shrink-0 rounded-2xl border-2 bg-white/90 border-white shadow-soft hover:shadow-glow active:scale-95 flex items-center justify-center transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+              style={{ color: "hsl(var(--ppa-blue))" }}
             >
               <Send size={20} className={lang === "ar" ? "rotate-180" : ""} />
             </button>

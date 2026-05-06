@@ -148,7 +148,7 @@
   .chat-prose h5,
   .chat-prose h6,
   .chat-prose strong {
-    font-weight: 700;
+    font-weight: 800 !important;
     color: hsl(217 91% 40%);
   }
 

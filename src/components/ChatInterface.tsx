@@ -3,6 +3,7 @@ import { Send, Home, Sparkles, Mic, Square, FileText, ArrowRight, RefreshCw } fr
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import mascotFace from "@/assets/tawreed-mascot-face.png";
+import tawreedLogo from "@/assets/tawreed-logo.png";
 import logoAr from "@/assets/ppa-logo-ar.png";
 import logoEn from "@/assets/ppa-logo-en.png";
 import { dict, type Lang } from "@/lib/i18n";

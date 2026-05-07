@@ -160,8 +160,11 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
       </div>
 
       {/* Header */}
-      <div className="relative z-20 shrink-0 border-b border-white/40 bg-white/60 backdrop-blur-xl">
-        <div className="max-w-4xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between gap-3">
+      <div
+        className="sticky top-0 z-30 shrink-0 border-b border-white/40 bg-white/60 backdrop-blur-xl"
+        style={{ paddingTop: "env(safe-area-inset-top)" }}
+      >
+        <div className="max-w-4xl mx-auto px-4 md:px-6 h-16 md:h-20 flex items-center justify-between gap-3">
           <button
             onClick={onHome}
             className="h-10 w-10 rounded-xl glass-panel flex items-center justify-center hover:shadow-glow transition"

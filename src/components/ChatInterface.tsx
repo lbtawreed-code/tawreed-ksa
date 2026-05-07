@@ -308,9 +308,6 @@ function MessageBubble({ msg, lang, onSuggest }: { msg: Msg; lang: Lang; onSugge
 
   const docs = (msg.docs || []).filter((d) => d.name && d.url && d.url !== "undefined");
 
-  // Parse the text to extract title, callout, steps
-  const { title, body, callout, steps } = parseBotMessage(msg.text);
-
   const nextActions = getNextActions(lang);
 
   return (
@@ -320,38 +317,11 @@ function MessageBubble({ msg, lang, onSuggest }: { msg: Msg; lang: Lang; onSugge
         <Card className="flex-1 glass-panel border border-gray-200 rounded-lg rounded-bl-sm px-5 py-4 shadow-soft">
           <div
             dir={lang === "ar" ? "rtl" : "ltr"}
-            className="chat-prose prose prose-sm max-w-none text-foreground/90 leading-relaxed"
+            className="chat-prose prose prose-sm max-w-none text-foreground/90 leading-relaxed flex flex-col"
           >
-            {title && (
-              <h2 className="font-bold mb-2" style={{ color: navy }}>
-                {title}
-              </h2>
-            )}
-            {body && (
-              <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>{body}</ReactMarkdown>
-            )}
-            {steps.length > 0 && (
-              <ol className="list-none pl-0 space-y-2 my-3">
-                {steps.map((s, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <Badge
-                      className="shrink-0 mt-0.5 rounded-full h-6 w-6 flex items-center justify-center p-0 border-transparent"
-                      style={{ backgroundColor: navy, color: "white" }}
-                    >
-                      {i + 1}
-                    </Badge>
-                    <div className="flex-1">
-                      <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>{s}</ReactMarkdown>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            )}
-            {callout && (
-              <div className="bg-slate-100 border-s-4 border-primary rounded-md px-4 py-3 my-3 not-prose">
-                <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>{callout}</ReactMarkdown>
-              </div>
-            )}
+            <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>
+              {msg.text}
+            </ReactMarkdown>
           </div>
           {docs.length > 0 && (
             <div className="mt-3 flex flex-wrap gap-2">

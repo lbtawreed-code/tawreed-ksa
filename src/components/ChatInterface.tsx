@@ -288,9 +288,20 @@ function MessageBubble({ msg, lang, onSuggest }: { msg: Msg; lang: Lang; onSugge
 
   const navy = "hsl(var(--ppa-navy-deep))";
   const mdComponents = {
-    a: ({ node, ...props }: any) => (
-      <a {...props} target="_blank" rel="noreferrer" className="font-bold underline" style={{ color: navy }} />
-    ),
+    a: ({ node, href, ...props }: any) => {
+      const isDrive = typeof href === "string" && /(^https?:\/\/)?(www\.)?drive\.google\.com/i.test(href);
+      return (
+        <a
+          {...props}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          {...(isDrive ? { referrerPolicy: "no-referrer" as const } : {})}
+          className="font-bold underline"
+          style={{ color: navy }}
+        />
+      );
+    },
     h1: ({ node, ...props }: any) => <h1 {...props} className="font-bold mt-3 mb-2" style={{ color: navy }} />,
     h2: ({ node, ...props }: any) => <h2 {...props} className="font-bold mt-3 mb-2" style={{ color: navy }} />,
     h3: ({ node, ...props }: any) => <h3 {...props} className="font-bold mt-2 mb-1.5" style={{ color: navy }} />,

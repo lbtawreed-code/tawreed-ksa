@@ -168,10 +168,12 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
         <div className="max-w-4xl mx-auto px-4 md:px-6 h-16 md:h-20 flex items-center justify-between gap-3">
           <button
             onClick={onHome}
-            className="h-10 w-10 rounded-xl glass-panel flex items-center justify-center hover:shadow-glow transition"
+            className="group relative h-11 w-11 rounded-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 shadow-soft hover:shadow-glow overflow-hidden"
+            style={{ background: "linear-gradient(135deg, hsl(var(--ppa-blue)), hsl(var(--ppa-navy-deep)))" }}
             aria-label="Home"
           >
-            <Home size={18} style={{ color: "hsl(var(--ppa-blue))" }} />
+            <span className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition" />
+            <House size={20} className="text-white relative z-10 group-hover:-translate-y-0.5 transition-transform" strokeWidth={2.4} />
           </button>
           <div className="flex items-center gap-2">
             <img src={logo} alt="PPA" className="h-9 object-contain" />

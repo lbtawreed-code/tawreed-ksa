@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Send, Home, Sparkles, Mic, Square, FileText, ArrowRight, RefreshCw } from "lucide-react";
+import { Send, House, Sparkles, Mic, Square, FileText, ArrowRight, RefreshCw } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import mascotFace from "@/assets/tawreed-mascot-face.png";

@@ -3,6 +3,7 @@ import { Send, Home, Sparkles, Mic, Square, FileText, ArrowRight, RefreshCw } fr
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import mascotFace from "@/assets/tawreed-mascot-face.png";
+import tawreedLogo from "@/assets/tawreed-logo.png";
 import logoAr from "@/assets/ppa-logo-ar.png";
 import logoEn from "@/assets/ppa-logo-en.png";
 import { dict, type Lang } from "@/lib/i18n";
@@ -176,7 +177,7 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
             <img src={logo} alt="PPA" className="h-9 object-contain" />
           </div>
           <div className="h-10 w-10 rounded-xl overflow-hidden ring-2 ring-white shadow-soft">
-            <img src={mascotFace} alt="Tawreed" className="w-full h-full object-cover" />
+            <img src={tawreedLogo} alt="Tawreed" className="w-full h-full object-contain" />
           </div>
         </div>
       </div>

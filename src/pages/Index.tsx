@@ -5,7 +5,7 @@ import { LangSwitcher } from "@/components/LangSwitcher";
 import type { Lang } from "@/lib/i18n";
 
 const Index = () => {
-  const [lang, setLang] = useState<Lang>("en");
+  const [lang, setLang] = useState<Lang>("ar");
   const [view, setView] = useState<"welcome" | "chat">("welcome");
 
   useEffect(() => {

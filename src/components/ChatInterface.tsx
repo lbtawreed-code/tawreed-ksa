@@ -176,7 +176,7 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
             <img src={logo} alt="PPA" className="h-9 object-contain" />
           </div>
           <div className="h-10 w-10 rounded-xl overflow-hidden ring-2 ring-white shadow-soft">
-            <img src={mascotFace} alt="Tawreed" className="w-full h-full object-cover" />
+            <img src={tawreedLogo} alt="Tawreed" className="w-full h-full object-contain" />
           </div>
         </div>
       </div>

@@ -1,9 +1,7 @@
-import { useState } from "react";
 import { ArrowRight, Shield, Languages, BookOpen } from "lucide-react";
-import mascotFace from "@/assets/tawreed-mascot-face.png";
 import logoAr from "@/assets/ppa-logo-ar.png";
 import logoEn from "@/assets/ppa-logo-en.png";
-import tawreedLogo from "@/assets/tawreed-logo.png";
+import etimadMascot from "@/assets/etimad-mascot.png";
 import { dict, type Lang } from "@/lib/i18n";
 
 const FEATURE_ICONS = [Shield, Languages, BookOpen];
@@ -26,30 +24,18 @@ export function WelcomeScreen({
       <div className="orb w-[220px] h-[220px] top-[40%] left-[30%] opacity-25" style={{ background: "hsl(var(--etimad-green))", animationDelay: "7s" }} />
 
       <div className="relative z-10 max-w-5xl mx-auto px-5 md:px-8 pt-12 md:pt-16 pb-8">
-        <div className="mb-6 md:mb-8 grid md:grid-cols-2 gap-6 md:gap-8 items-center">
-          <div className="flex justify-center">
-            <img
-              src={logo}
-              alt="Etimad"
-              className="w-full max-w-[320px] aspect-[16/9] object-contain logo-3d"
-            />
-          </div>
-
-          <div className="flex justify-center">
-            <img
-              src={tawreedLogo}
-              alt="TAWREED"
-              className="w-full max-w-[320px] aspect-[16/9] object-contain logo-3d"
-            />
-          </div>
-
+        <div className="mb-6 md:mb-8 flex justify-center">
+          <img
+            src={logo}
+            alt="Etimad"
+            className="w-full max-w-[320px] aspect-[16/9] object-contain logo-3d"
+          />
         </div>
 
         <div className="glass-panel rounded-3xl shadow-elegant overflow-hidden grid md:grid-cols-2 max-w-5xl mx-auto">
           <div className="relative p-6 md:p-8 flex items-center justify-center bg-gradient-to-br from-secondary to-secondary/40">
-            <div className="relative w-full max-w-[320px] aspect-[9/16] rounded-2xl overflow-hidden shadow-elegant ring-4 ring-white">
-              <img src={mascotFace} alt="Tawreed mascot" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            <div className="relative w-full max-w-[360px] rounded-2xl overflow-hidden shadow-elegant ring-4 ring-white">
+              <img src={etimadMascot} alt="Etimad Representative" className="w-full h-full object-cover" />
             </div>
           </div>
 

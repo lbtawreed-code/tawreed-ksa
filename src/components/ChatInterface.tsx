@@ -2,10 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { Send, House, Sparkles, Mic, Square, FileText, ArrowRight, RefreshCw } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import mascotFace from "@/assets/tawreed-mascot-face.png";
-import tawreedLogo from "@/assets/tawreed-logo.png";
-import logoAr from "@/assets/ppa-logo-ar.png";
-import logoEn from "@/assets/ppa-logo-en.png";
+import mascotFace from "@/assets/etimad-mascot.png";
+import tawreedLogo from "@/assets/etimad.png";
+import logoAr from "@/assets/etimad.png";
 import { dict, type Lang } from "@/lib/i18n";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -148,7 +147,7 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
     setRecording(false);
   }
 
-  const logo = lang === "ar" ? logoAr : logoEn;
+  const logo = logoAr;
 
   return (
     <div className="relative flex min-h-screen h-[100dvh] flex-col overflow-hidden gradient-chat" dir={lang === "ar" ? "rtl" : "ltr"}>

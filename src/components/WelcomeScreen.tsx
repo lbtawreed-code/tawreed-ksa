@@ -1,6 +1,5 @@
 import { ArrowRight, Shield, Languages, BookOpen } from "lucide-react";
-import logoAr from "@/assets/ppa-logo-ar.png";
-import logoEn from "@/assets/ppa-logo-en.png";
+import etimadLogo from "@/assets/etimad.png";
 import etimadMascot from "@/assets/etimad-mascot.png";
 import { dict, type Lang } from "@/lib/i18n";
 
@@ -14,7 +13,6 @@ export function WelcomeScreen({
   onStart: () => void;
 }) {
   const t = dict[lang];
-  const logo = lang === "ar" ? logoAr : logoEn;
   const isRtl = lang === "ar";
 
   return (
@@ -26,7 +24,7 @@ export function WelcomeScreen({
       <div className="relative z-10 max-w-5xl mx-auto px-5 md:px-8 pt-12 md:pt-16 pb-8">
         <div className="mb-6 md:mb-8 flex justify-center">
           <img
-            src={logo}
+            src={etimadLogo}
             alt="Etimad"
             className="w-full max-w-[320px] aspect-[16/9] object-contain logo-3d"
           />

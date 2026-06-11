@@ -1,4 +1,4 @@
-﻿export type Lang = "ar" | "en" | "fr";
+export type Lang = "ar" | "en" | "fr";
 
 type Feature = { t: string; d: string };
 

@@ -1,9 +1,9 @@
 import type { Lang } from "@/lib/i18n";
 
 const LANGS: { code: Lang; label: string; flag: string }[] = [
-  { code: "ar", label: "العربية", flag: "🇸🇦" },
-  { code: "en", label: "English", flag: "🇬🇧" },
-  { code: "fr", label: "Français", flag: "🇫🇷" },
+  { code: "ar", label: "العربية", flag: "\uD83C\uDDF8\uD83C\uDDE6" }, // 🇸🇦
+  { code: "en", label: "English", flag: "\uD83C\uDDEC\uD83C\uDDE7" },  // 🇬🇧
+  { code: "fr", label: "Français", flag: "\uD83C\uDDEB\uD83C\uDDF7" }   // 🇫🇷
 ];
 
 export function LangSwitcher({

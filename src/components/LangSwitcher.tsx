@@ -1,12 +1,10 @@
 import type { Lang } from "@/lib/i18n";
-import flagSa from "@/assets/flag-sa.png";
-import flagUk from "@/assets/flag-uk.png";
-import flagFr from "@/assets/flag-fr.png";
 
+// We use clean emojis so you don't need physical image files!
 const LANGS: { code: Lang; label: string; flag: string }[] = [
-  { code: "ar", label: "العربية", flag: flagSa },
-  { code: "en", label: "English", flag: flagUk },
-  { code: "fr", label: "Français", flag: flagFr },
+  { code: "ar", label: "العربية", flag: "🇸🇦" },
+  { code: "en", label: "English", flag: "🇬🇧" },
+  { code: "fr", label: "Français", flag: "🇫🇷" },
 ];
 
 export function LangSwitcher({
@@ -29,7 +27,8 @@ export function LangSwitcher({
               : "text-foreground/70 hover:text-foreground"
           }`}
         >
-          <img src={l.flag} alt="" className="h-5 w-5 object-contain drop-shadow" />
+          {/* Replaced <img /> with a clean text span for the emoji */}
+          <span className="text-base leading-none">{l.flag}</span>
           {l.code.toUpperCase()}
         </button>
       ))}

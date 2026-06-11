@@ -80,7 +80,8 @@ export function WelcomeScreen({
         </div>
 
         <div className="mt-10 text-center text-xs text-foreground/50">
-          <div className="cedar-bar w-16 mx-auto rounded-full mb-3 opacity-50" />
+          {/* Swapped out the cedar-bar class to a clean, universal geometric line separator */}
+          <div className="h-[2px] w-16 mx-auto rounded-full mb-3 opacity-30" style={{ backgroundColor: "hsl(var(--etimad-light-green))" }} />
           Powered by TAWREED AI AGENT — © 2026 — AMEED ASHQAR
         </div>
       </div>

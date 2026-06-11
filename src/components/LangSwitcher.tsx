@@ -1,9 +1,27 @@
+$path = "src\components\LangSwitcher.tsx"
+$utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+$content = @'
 import type { Lang } from "@/lib/i18n";
 
-const LANGS: { code: Lang; label: string; flag: string }[] = [
-  { code: "ar", label: "العربية", flag: "\uD83C\uDDF8\uD83C\uDDE6" }, // 🇸🇦
-  { code: "en", label: "English", flag: "\uD83C\uDDEC\uD83C\uDDE7" },  // 🇬🇧
-  { code: "fr", label: "Français", flag: "\uD83C\uDDEB\uD83C\uDDF7" }   // 🇫🇷
+const LANGS: { code: Lang; label: string; flagUrl: string; alt: string }[] = [
+  { 
+    code: "ar", 
+    label: "العربية", 
+    flagUrl: "https://flagcdn.com/w40/sa.png", 
+    alt: "Saudi Arabia Flag" 
+  },
+  { 
+    code: "en", 
+    label: "English", 
+    flagUrl: "https://flagcdn.com/w40/gb.png", 
+    alt: "United Kingdom Flag" 
+  },
+  { 
+    code: "fr", 
+    label: "Français", 
+    flagUrl: "https://flagcdn.com/w40/fr.png", 
+    alt: "France Flag" 
+  },
 ];
 
 export function LangSwitcher({
@@ -26,10 +44,18 @@ export function LangSwitcher({
               : "text-foreground/70 hover:text-foreground"
           }`}
         >
-          <span className="text-base leading-none">{l.flag}</span>
+          <img 
+            src={l.flagUrl} 
+            alt={l.alt} 
+            className="w-4 h-auto object-contain rounded-sm inline-block" 
+            style={{ minWidth: "16px" }}
+          />
           {l.code.toUpperCase()}
         </button>
       ))}
     </div>
   );
 }
+'@
+
+[System.IO.File]::WriteAllLines((Resolve-Path .).Path + "\" + $path, $content, $utf8NoBom)

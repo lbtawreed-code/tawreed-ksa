@@ -1,10 +1,10 @@
 import type { Lang } from "@/lib/i18n";
-import flagLb from "@/assets/flag-lb.png";
+import flagSa from "@/assets/flag-sa.png";
 import flagUk from "@/assets/flag-uk.png";
 import flagFr from "@/assets/flag-fr.png";
 
 const LANGS: { code: Lang; label: string; flag: string }[] = [
-  { code: "ar", label: "العربية", flag: flagLb },
+  { code: "ar", label: "العربية", flag: flagSa },
   { code: "en", label: "English", flag: flagUk },
   { code: "fr", label: "Français", flag: flagFr },
 ];

@@ -4,10 +4,10 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import mascotFace from "@/assets/etimad-mascot.png";
 import tawreedLogo from "@/assets/etimad.png";
+import mofLogo from "@/assets/mof.jpg";
 import logoAr from "@/assets/etimad.png";
 import { dict, type Lang } from "@/lib/i18n";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 const WEBHOOK_URL = "https://n8n.lbtawreed.online/webhook/60ec1b41-1707-4a3b-a87b-e20e6f43295c";
@@ -77,21 +77,20 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
     }
   }
 
-  async function sendAudio(blob: Blob, formData?: FormData, isRetry = false) {
+  async function sendAudio(blob: Blob, isRetry = false) {
     if (!isRetry) {
       setMessages((m) => [...m, { id: crypto.randomUUID(), sender: "user", text: "🎤 Voice message" }]);
     }
     setSending(true);
 
-    const fd = formData ?? (() => {
-      const f = new FormData();
-      f.append("file", blob, "audio.webm");
-      f.append("sessionId", sessionId.current);
-      return f;
-    })();
+    // Rebuild FormData cleanly on each execution path to avoid cumulative mutations
+    const formData = new FormData();
+    formData.append("file", blob, "audio.webm");
+    formData.append("sessionId", sessionId.current);
+    formData.append("language", lang);
 
     try {
-      const res = await fetch(WEBHOOK_URL, { method: "POST", body: fd });
+      const res = await fetch(WEBHOOK_URL, { method: "POST", body: formData });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       setMessages((m) => [
@@ -107,7 +106,7 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
       console.error("[voice] upload failed", err);
       setMessages((m) => [
         ...m,
-        { id: crypto.randomUUID(), sender: "bot", text: t.error, retry: () => sendAudio(blob, fd, true) },
+        { id: crypto.randomUUID(), sender: "bot", text: t.error, retry: () => sendAudio(blob, true) },
       ]);
     } finally {
       setSending(false);
@@ -123,15 +122,23 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
         : MediaRecorder.isTypeSupported("audio/webm")
         ? "audio/webm"
         : "";
+      
       const mr = mime ? new MediaRecorder(stream, { mimeType: mime }) : new MediaRecorder(stream);
       audioChunksRef.current = [];
-      mr.ondataavailable = (e) => { if (e.data.size > 0) audioChunksRef.current.push(e.data); };
+      
+      mr.ondataavailable = (e) => { 
+        if (e.data.size > 0) audioChunksRef.current.push(e.data); 
+      };
+      
       mr.onstop = () => {
         const finalMime = mr.mimeType || "audio/webm";
         const blob = new Blob(audioChunksRef.current, { type: finalMime });
+        
+        // Safe track teardown processing after the buffers are clear
         stream.getTracks().forEach((tr) => tr.stop());
         if (blob.size > 0) sendAudio(blob);
       };
+      
       mediaRecorderRef.current = mr;
       mr.start();
       setRecording(true);
@@ -147,23 +154,18 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
     setRecording(false);
   }
 
-  const logo = logoAr;
-
   return (
     <div className="relative flex min-h-screen h-[100dvh] flex-col overflow-hidden gradient-chat" dir={lang === "ar" ? "rtl" : "ltr"}>
       <div className="orb" style={{ width: 320, height: 320, background: "hsl(var(--etimad-light-green))", top: -80, right: -80, opacity: 0.15 }} />
       <div className="orb" style={{ width: 260, height: 260, background: "hsl(var(--etimad-teal))", bottom: -60, left: -60, opacity: 0.15, animationDelay: "3s" }} />
 
-      {/* Etimad watermark */}
+      {/* Watermark background layout */}
       <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center opacity-[0.06]">
-        <img src={logo} alt="" className="w-[80%] h-[80%] object-contain" />
+        <img src={mofLogo} alt="" className="w-[80%] h-[80%] object-contain" />
       </div>
 
-      {/* Header */}
-      <div
-        className="sticky top-0 z-30 shrink-0 border-b border-white/40 bg-white/60 backdrop-blur-xl"
-        style={{ paddingTop: "env(safe-area-inset-top)" }}
-      >
+      {/* Header Elements */}
+      <div className="sticky top-0 z-30 shrink-0 border-b border-white/40 bg-white/60 backdrop-blur-xl" style={{ paddingTop: "env(safe-area-inset-top)" }}>
         <div className="max-w-4xl mx-auto px-4 md:px-6 h-16 md:h-20 flex items-center justify-between gap-3">
           <button
             onClick={onHome}
@@ -175,7 +177,7 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
             <House size={20} className="text-white relative z-10 group-hover:-translate-y-0.5 transition-transform" strokeWidth={2.4} />
           </button>
           <div className="flex items-center gap-2">
-            <img src={logo} alt="Etimad" className="h-9 object-contain" />
+            <img src={mofLogo} alt="Etimad" className="h-9 object-contain" />
           </div>
           <div className="h-10 w-10 rounded-xl overflow-hidden ring-2 ring-white shadow-soft">
             <img src={tawreedLogo} alt="Tawreed" className="w-full h-full object-contain" />
@@ -183,7 +185,7 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
         </div>
       </div>
 
-      {/* Messages */}
+      {/* Message Feed Viewport */}
       <div className="relative z-10 flex-1 overflow-y-auto" style={{ paddingTop: 16, paddingBottom: 32 }}>
         <div className="max-w-4xl mx-auto px-4 md:px-6 flex flex-col space-y-8">
           {messages.map((m) => (
@@ -205,6 +207,7 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
         </div>
       </div>
 
+      {/* Input Panel Actions Container */}
       <div className="relative z-10 mt-auto w-full shrink-0">
         {messages.length <= 1 && (
           <div className="max-w-4xl w-full mx-auto px-4 md:px-6 pb-3 fade-in">
@@ -301,10 +304,9 @@ function MessageBubble({ msg, lang, onSuggest }: { msg: Msg; lang: Lang; onSugge
         />
       );
     },
-    h1: ({ node, ...props }: any) => <h1 {...props} className="font-bold mt-3 mb-2" style={{ color: darkGreen }} />,
-    h2: ({ node, ...props }: any) => <h2 {...props} className="font-bold mt-3 mb-2" style={{ color: darkGreen }} />,
-    h3: ({ node, ...props }: any) => <h3 {...props} className="font-bold mt-2 mb-1.5" style={{ color: darkGreen }} />,
-    h4: ({ node, ...props }: any) => <h4 {...props} className="font-bold mt-2 mb-1.5" style={{ color: darkGreen }} />,
+    h1: ({ node, ...props }: any) => <h1 {...props} className="font-bold mt-3 mb-2 text-lg" style={{ color: darkGreen }} />,
+    h2: ({ node, ...props }: any) => <h2 {...props} className="font-bold mt-3 mb-2 text-base" style={{ color: darkGreen }} />,
+    h3: ({ node, ...props }: any) => <h3 {...props} className="font-bold mt-2 mb-1.5 text-sm" style={{ color: darkGreen }} />,
     strong: ({ node, ...props }: any) => <strong {...props} className="font-bold" style={{ color: darkGreen }} />,
     ul: ({ node, ...props }: any) => <ul {...props} className="list-disc ps-6 my-2 space-y-1.5" />,
     ol: ({ node, ...props }: any) => <ol {...props} className="list-decimal ps-6 my-2 space-y-1.5" />,
@@ -323,7 +325,6 @@ function MessageBubble({ msg, lang, onSuggest }: { msg: Msg; lang: Lang; onSugge
   }
 
   const docs = (msg.docs || []).filter((d) => d.name && d.url && d.url !== "undefined");
-
   const nextActions = getNextActions(lang);
 
   return (
@@ -331,10 +332,7 @@ function MessageBubble({ msg, lang, onSuggest }: { msg: Msg; lang: Lang; onSugge
       <div className="flex items-end gap-3 max-w-[90%] w-full">
         <img src={mascotFace} alt="" className="h-9 w-9 rounded-full ring-2 ring-white object-cover shadow-md flex-shrink-0" />
         <Card className="flex-1 glass-panel border border-gray-200 rounded-lg rounded-bl-sm px-5 py-4 shadow-soft">
-          <div
-            dir={lang === "ar" ? "rtl" : "ltr"}
-            className="chat-prose prose prose-sm max-w-none text-foreground/90 leading-relaxed flex flex-col"
-          >
+          <div dir={lang === "ar" ? "rtl" : "ltr"} className="chat-prose prose prose-sm max-w-none text-foreground/90 leading-relaxed flex flex-col">
             <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>
               {msg.text}
             </ReactMarkdown>
@@ -359,7 +357,7 @@ function MessageBubble({ msg, lang, onSuggest }: { msg: Msg; lang: Lang; onSugge
           {msg.id !== "init" && (
             <div className="mt-4 pt-3 border-t border-border/60 flex flex-wrap gap-2">
               <Button size="sm" variant="default" onClick={() => onSuggest(nextActions[0])} className="gap-1.5">
-                <ArrowRight size={14} /> {nextActions[0]}
+                <ArrowRight size={14} className={lang === "ar" ? "rotate-180" : ""} /> {nextActions[0]}
               </Button>
               <Button size="sm" variant="outline" onClick={() => onSuggest(nextActions[1])} className="gap-1.5">
                 <Sparkles size={14} /> {nextActions[1]}
@@ -375,42 +373,6 @@ function MessageBubble({ msg, lang, onSuggest }: { msg: Msg; lang: Lang; onSugge
       </div>
     </div>
   );
-}
-
-function parseBotMessage(text: string): { title: string; body: string; callout: string; steps: string[] } {
-  const lines = text.split("\n");
-  let title = "";
-  let rest = text;
-
-  // Title = first markdown heading or first non-empty line if short
-  const headingMatch = text.match(/^#{1,6}\s+(.+)$/m);
-  if (headingMatch) {
-    title = headingMatch[1].trim();
-    rest = text.replace(headingMatch[0], "").trim();
-  } else {
-    const first = lines.find((l) => l.trim());
-    if (first && first.length < 90 && lines.length > 1) {
-      title = first.replace(/^\*+|\*+$/g, "").trim();
-      rest = lines.slice(lines.indexOf(first) + 1).join("\n").trim();
-    }
-  }
-
-  // Extract numbered steps (lines starting with "1.", "2.", etc.)
-  const steps: string[] = [];
-  const stepRegex = /^\s*\d+[.)]\s+(.+)$/gm;
-  let m;
-  while ((m = stepRegex.exec(rest)) !== null) steps.push(m[1].trim());
-  if (steps.length > 0) rest = rest.replace(stepRegex, "").trim();
-
-  // Callout: blockquote (lines starting with >) OR last paragraph if it begins with key markers
-  let callout = "";
-  const blockquoteMatch = rest.match(/(^|\n)((?:>\s?.*(?:\n|$))+)/);
-  if (blockquoteMatch) {
-    callout = blockquoteMatch[2].replace(/^>\s?/gm, "").trim();
-    rest = rest.replace(blockquoteMatch[0], "").trim();
-  }
-
-  return { title, body: rest, callout, steps };
 }
 
 function getNextActions(lang: Lang): [string, string] {

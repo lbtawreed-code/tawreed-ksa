@@ -168,7 +168,7 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
         <div className="max-w-4xl mx-auto px-4 md:px-6 h-16 md:h-20 flex items-center justify-between gap-3">
           <button
             onClick={onHome}
-            className="group relative h-11 w-11 rounded-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 shadow-soft hover:shadow-glow overflow-hid[...]
+            className="group relative h-11 w-11 rounded-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 shadow-soft hover:shadow-glow overflow-hidden"
             style={{ background: "linear-gradient(135deg, hsl(var(--etimad-light-green)), hsl(var(--etimad-dark-green)))" }}
             aria-label="Home"
           >
@@ -219,7 +219,7 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
                   key={s}
                   onClick={() => send(s)}
                   style={{ animationDelay: `${i * 60}ms`, color: "hsl(var(--etimad-dark-green))" }}
-                  className="fade-in group text-xs md:text-sm px-4 py-2.5 rounded-2xl bg-white/85 hover:bg-white border border-white shadow-soft backdrop-blur-md transition-all duration-300 hover[...]
+                  className="fade-in group text-xs md:text-sm px-4 py-2.5 rounded-2xl bg-white/85 hover:bg-white border border-white shadow-soft backdrop-blur-md transition-all duration-300 hover:shadow-glow"
                 >
                   <Sparkles size={14} className="flex-shrink-0 group-hover:rotate-12 group-hover:scale-110 transition-transform" style={{ color: "hsl(var(--etimad-light-green))" }} />
                   <span>{s}</span>
@@ -236,7 +236,7 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && send(input)}
               placeholder={t.placeholder}
-              className="flex-1 h-12 px-5 rounded-2xl border-2 border-white bg-white/90 outline-none focus:bg-white transition-all duration-300 text-sm md:text-base placeholder:text-muted-foregro[...]
+              className="flex-1 h-12 px-5 rounded-2xl border-2 border-white bg-white/90 outline-none focus:bg-white transition-all duration-300 text-sm md:text-base placeholder:text-muted-foreground"
             />
 
             <button
@@ -258,7 +258,7 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
               onClick={() => send(input)}
               disabled={sending || !input.trim() || recording}
               aria-label={t.send}
-              className="h-12 w-12 shrink-0 rounded-2xl border-2 bg-white/90 border-white shadow-soft hover:shadow-glow active:scale-95 flex items-center justify-center transition-all disabled:op[...]
+              className="h-12 w-12 shrink-0 rounded-2xl border-2 bg-white/90 border-white shadow-soft hover:shadow-glow active:scale-95 flex items-center justify-center transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               style={{ color: "hsl(var(--etimad-light-green))" }}
             >
               <Send size={20} className={lang === "ar" ? "rotate-180" : ""} />
@@ -419,4 +419,3 @@ function getNextActions(lang: Lang): [string, string] {
   if (lang === "fr") return ["En savoir plus", "Donnez-moi un exemple"];
   return ["Tell me more", "Give me an example"];
 }
-

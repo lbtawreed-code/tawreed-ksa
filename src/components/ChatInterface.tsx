@@ -11,7 +11,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-const WEBHOOK_URL = "https://n8n.multydo.com/webhook/tawreed-chat";
+const WEBHOOK_URL = "https://n8n.lbtawreed.online/webhook/60ec1b41-1707-4a3b-a87b-e20e6f43295c";
 
 type Doc = { name: string; url: string };
 type Msg = {
@@ -152,10 +152,10 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
 
   return (
     <div className="relative flex min-h-screen h-[100dvh] flex-col overflow-hidden gradient-chat" dir={lang === "ar" ? "rtl" : "ltr"}>
-      <div className="orb" style={{ width: 320, height: 320, background: "hsl(var(--ppa-blue))", top: -80, right: -80, opacity: 0.15 }} />
-      <div className="orb" style={{ width: 260, height: 260, background: "hsl(var(--ppa-green))", bottom: -60, left: -60, opacity: 0.15, animationDelay: "3s" }} />
+      <div className="orb" style={{ width: 320, height: 320, background: "hsl(var(--etimad-light-green))", top: -80, right: -80, opacity: 0.15 }} />
+      <div className="orb" style={{ width: 260, height: 260, background: "hsl(var(--etimad-teal))", bottom: -60, left: -60, opacity: 0.15, animationDelay: "3s" }} />
 
-      {/* PPA watermark */}
+      {/* Etimad watermark */}
       <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center opacity-[0.06]">
         <img src={logo} alt="" className="w-[80%] h-[80%] object-contain" />
       </div>
@@ -168,15 +168,15 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
         <div className="max-w-4xl mx-auto px-4 md:px-6 h-16 md:h-20 flex items-center justify-between gap-3">
           <button
             onClick={onHome}
-            className="group relative h-11 w-11 rounded-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 shadow-soft hover:shadow-glow overflow-hidden"
-            style={{ background: "linear-gradient(135deg, hsl(var(--ppa-blue)), hsl(var(--ppa-navy-deep)))" }}
+            className="group relative h-11 w-11 rounded-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 shadow-soft hover:shadow-glow overflow-hid[...]
+            style={{ background: "linear-gradient(135deg, hsl(var(--etimad-light-green)), hsl(var(--etimad-dark-green)))" }}
             aria-label="Home"
           >
             <span className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition" />
             <House size={20} className="text-white relative z-10 group-hover:-translate-y-0.5 transition-transform" strokeWidth={2.4} />
           </button>
           <div className="flex items-center gap-2">
-            <img src={logo} alt="PPA" className="h-9 object-contain" />
+            <img src={logo} alt="Etimad" className="h-9 object-contain" />
           </div>
           <div className="h-10 w-10 rounded-xl overflow-hidden ring-2 ring-white shadow-soft">
             <img src={tawreedLogo} alt="Tawreed" className="w-full h-full object-contain" />
@@ -209,8 +209,8 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
       <div className="relative z-10 mt-auto w-full shrink-0">
         {messages.length <= 1 && (
           <div className="max-w-4xl w-full mx-auto px-4 md:px-6 pb-3 fade-in">
-            <div className="text-[11px] uppercase tracking-[0.2em] font-bold mb-3 px-1 flex items-center gap-2" style={{ color: "hsl(var(--ppa-navy) / 0.5)" }}>
-              <Sparkles size={12} style={{ color: "hsl(var(--ppa-blue))" }} />
+            <div className="text-[11px] uppercase tracking-[0.2em] font-bold mb-3 px-1 flex items-center gap-2" style={{ color: "hsl(var(--etimad-dark-green) / 0.5)" }}>
+              <Sparkles size={12} style={{ color: "hsl(var(--etimad-light-green))" }} />
               {lang === "ar" ? "اقتراحات" : lang === "fr" ? "Suggestions" : "Try asking"}
             </div>
             <div className="flex flex-wrap gap-2.5">
@@ -218,10 +218,10 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
                 <button
                   key={s}
                   onClick={() => send(s)}
-                  style={{ animationDelay: `${i * 60}ms`, color: "hsl(var(--ppa-navy))" }}
-                  className="fade-in group text-xs md:text-sm px-4 py-2.5 rounded-2xl bg-white/85 hover:bg-white border border-white shadow-soft backdrop-blur-md transition-all duration-300 hover:shadow-glow hover:-translate-y-0.5 active:scale-95 flex items-center gap-2 font-medium"
+                  style={{ animationDelay: `${i * 60}ms`, color: "hsl(var(--etimad-dark-green))" }}
+                  className="fade-in group text-xs md:text-sm px-4 py-2.5 rounded-2xl bg-white/85 hover:bg-white border border-white shadow-soft backdrop-blur-md transition-all duration-300 hover[...]
                 >
-                  <Sparkles size={14} className="flex-shrink-0 group-hover:rotate-12 group-hover:scale-110 transition-transform" style={{ color: "hsl(var(--ppa-blue))" }} />
+                  <Sparkles size={14} className="flex-shrink-0 group-hover:rotate-12 group-hover:scale-110 transition-transform" style={{ color: "hsl(var(--etimad-light-green))" }} />
                   <span>{s}</span>
                 </button>
               ))}
@@ -236,7 +236,7 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && send(input)}
               placeholder={t.placeholder}
-              className="flex-1 h-12 px-5 rounded-2xl border-2 border-white bg-white/90 outline-none focus:bg-white transition-all duration-300 text-sm md:text-base placeholder:text-muted-foreground shadow-soft focus:shadow-glow"
+              className="flex-1 h-12 px-5 rounded-2xl border-2 border-white bg-white/90 outline-none focus:bg-white transition-all duration-300 text-sm md:text-base placeholder:text-muted-foregro[...]
             />
 
             <button
@@ -248,7 +248,7 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
                   ? "bg-destructive border-destructive text-destructive-foreground scale-105"
                   : "bg-white/90 border-white shadow-soft hover:shadow-glow active:scale-95"
               } disabled:opacity-50 disabled:cursor-not-allowed`}
-              style={!recording ? { color: "hsl(var(--ppa-blue))" } : undefined}
+              style={!recording ? { color: "hsl(var(--etimad-light-green))" } : undefined}
             >
               {recording && <span className="pulse-ring" />}
               {recording ? <Square size={18} fill="currentColor" /> : <Mic size={20} />}
@@ -258,15 +258,15 @@ export function ChatInterface({ lang, onHome }: { lang: Lang; onHome: () => void
               onClick={() => send(input)}
               disabled={sending || !input.trim() || recording}
               aria-label={t.send}
-              className="h-12 w-12 shrink-0 rounded-2xl border-2 bg-white/90 border-white shadow-soft hover:shadow-glow active:scale-95 flex items-center justify-center transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-              style={{ color: "hsl(var(--ppa-blue))" }}
+              className="h-12 w-12 shrink-0 rounded-2xl border-2 bg-white/90 border-white shadow-soft hover:shadow-glow active:scale-95 flex items-center justify-center transition-all disabled:op[...]
+              style={{ color: "hsl(var(--etimad-light-green))" }}
             >
               <Send size={20} className={lang === "ar" ? "rotate-180" : ""} />
             </button>
           </div>
           <div
             className="max-w-4xl mx-auto px-4 md:px-6 pb-2 pt-1 text-center text-[10px] md:text-xs leading-tight font-semibold"
-            style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))", color: "hsl(var(--ppa-navy) / 0.65)" }}
+            style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))", color: "hsl(var(--etimad-dark-green) / 0.65)" }}
           >
             {lang === "ar"
               ? "توريد قد يخطئ، القوانين والأنظمة هي المرجع"
@@ -286,7 +286,7 @@ function MessageBubble({ msg, lang, onSuggest }: { msg: Msg; lang: Lang; onSugge
     ? lang === "ar" ? "justify-start" : "justify-end"
     : lang === "ar" ? "justify-end" : "justify-start";
 
-  const navy = "hsl(var(--ppa-navy-deep))";
+  const darkGreen = "hsl(var(--etimad-dark-green))";
   const mdComponents = {
     a: ({ node, href, ...props }: any) => {
       const isDrive = typeof href === "string" && /(^https?:\/\/)?(www\.)?drive\.google\.com/i.test(href);
@@ -298,15 +298,15 @@ function MessageBubble({ msg, lang, onSuggest }: { msg: Msg; lang: Lang; onSugge
           rel="noopener noreferrer"
           {...(isDrive ? { referrerPolicy: "no-referrer" as const } : {})}
           className="font-bold underline"
-          style={{ color: navy }}
+          style={{ color: darkGreen }}
         />
       );
     },
-    h1: ({ node, ...props }: any) => <h1 {...props} className="font-bold mt-3 mb-2" style={{ color: navy }} />,
-    h2: ({ node, ...props }: any) => <h2 {...props} className="font-bold mt-3 mb-2" style={{ color: navy }} />,
-    h3: ({ node, ...props }: any) => <h3 {...props} className="font-bold mt-2 mb-1.5" style={{ color: navy }} />,
-    h4: ({ node, ...props }: any) => <h4 {...props} className="font-bold mt-2 mb-1.5" style={{ color: navy }} />,
-    strong: ({ node, ...props }: any) => <strong {...props} className="font-bold" style={{ color: navy }} />,
+    h1: ({ node, ...props }: any) => <h1 {...props} className="font-bold mt-3 mb-2" style={{ color: darkGreen }} />,
+    h2: ({ node, ...props }: any) => <h2 {...props} className="font-bold mt-3 mb-2" style={{ color: darkGreen }} />,
+    h3: ({ node, ...props }: any) => <h3 {...props} className="font-bold mt-2 mb-1.5" style={{ color: darkGreen }} />,
+    h4: ({ node, ...props }: any) => <h4 {...props} className="font-bold mt-2 mb-1.5" style={{ color: darkGreen }} />,
+    strong: ({ node, ...props }: any) => <strong {...props} className="font-bold" style={{ color: darkGreen }} />,
     ul: ({ node, ...props }: any) => <ul {...props} className="list-disc ps-6 my-2 space-y-1.5" />,
     ol: ({ node, ...props }: any) => <ol {...props} className="list-decimal ps-6 my-2 space-y-1.5" />,
     li: ({ node, ...props }: any) => <li {...props} className="leading-relaxed" />,
@@ -349,7 +349,7 @@ function MessageBubble({ msg, lang, onSuggest }: { msg: Msg; lang: Lang; onSugge
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-lg bg-white border border-border hover:shadow-soft transition underline"
-                  style={{ color: "hsl(var(--ppa-navy-deep))", borderColor: "hsl(var(--ppa-navy-deep) / 0.3)" }}
+                  style={{ color: "hsl(var(--etimad-dark-green))", borderColor: "hsl(var(--etimad-dark-green) / 0.3)" }}
                 >
                   <FileText size={13} />
                   {d.name}
@@ -368,7 +368,7 @@ function MessageBubble({ msg, lang, onSuggest }: { msg: Msg; lang: Lang; onSugge
             </div>
           )}
           {msg.retry && (
-            <button onClick={msg.retry} className="mt-3 text-xs font-semibold underline flex items-center gap-1" style={{ color: "hsl(var(--ppa-blue))" }}>
+            <button onClick={msg.retry} className="mt-3 text-xs font-semibold underline flex items-center gap-1" style={{ color: "hsl(var(--etimad-light-green))" }}>
               <RefreshCw size={12} /> {lang === "ar" ? "إعادة المحاولة" : lang === "fr" ? "Réessayer" : "Retry"}
             </button>
           )}

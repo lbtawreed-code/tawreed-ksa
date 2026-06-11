@@ -1,6 +1,5 @@
 import type { Lang } from "@/lib/i18n";
 
-// We use clean emojis so you don't need physical image files!
 const LANGS: { code: Lang; label: string; flag: string }[] = [
   { code: "ar", label: "العربية", flag: "🇸🇦" },
   { code: "en", label: "English", flag: "🇬🇧" },
@@ -27,7 +26,6 @@ export function LangSwitcher({
               : "text-foreground/70 hover:text-foreground"
           }`}
         >
-          {/* Replaced <img /> with a clean text span for the emoji */}
           <span className="text-base leading-none">{l.flag}</span>
           {l.code.toUpperCase()}
         </button>
